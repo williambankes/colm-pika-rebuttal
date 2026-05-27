@@ -1,0 +1,75 @@
+# Colm-Pika-Rebuttal
+
+This anon repo provides plots and additional results for the reviewers interest. These will be added to the appendix of the updated manuscript.
+
+## Analysis of Probe Performance Across Layers
+
+| Layer | Qwen/Qwen2.5-Math-1.5B-Instruct | Qwen/Qwen2.5-Math-7B-Instruct |
+|---:|---:|---:|
+| 1 | 0.7552 | 0.7663 |
+| 3 | 0.7818 | 0.7780 |
+| 5 | 0.7882 | 0.7869 |
+| 7 | 0.7937 | 0.7974 |
+| 9 | 0.8053 | 0.8064 |
+| 11 | 0.8077 | 0.8189 |
+| 13 | 0.8156 | 0.8232 |
+| 15 | 0.8286 | 0.8427 |
+| 17 | **0.8434** | **0.8515** |
+| 19 | 0.8417 | 0.8504 |
+| 21 | 0.8355 | 0.8465 |
+| 23 | 0.8386 | 0.8453 |
+| 25 | 0.8368 | 0.8379 |
+| 27 | 0.8368 | 0.8436 |
+
+| model | dataset | best_layer_idx | best_pos_idx | best_val_score | test_score |
+|---|---|---|---|---|---|
+| Qwen2.5-Math-7B-Instruct | MATH | 21 | 4 | 0.891 | 0.846 |
+| Qwen2.5-Math-7B-Instruct | AMC | 22 | 4 | 0.881 | 0.848 |
+| Qwen2.5-Math-7B-Instruct | AIME | 28 | 1 | 0.867 | 0.679 |
+| Qwen2.5-Math-7B-Instruct | GSM8K | 20 | 4 | 0.754 | 0.767 |
+| DeepSeek-R1-Distill-Qwen-7B | MATH | 27 | 2 | 0.793 | 0.739 |
+| DeepSeek-R1-Distill-Qwen-7B | AIME | 13 | 1 | 0.753 | 0.701 |
+| DeepSeek-R1-Distill-Qwen-7B | GSM8K | 23 | 1 | 0.647 | 0.640 |
+| gpt-oss-20b_high | MATH | 15 | 0 | 0.850 | 0.860 |
+| gpt-oss-20b_high | AMC | 16 | 2 | 0.757 | 0.691 |
+| gpt-oss-20b_high | AIME | 10 | 2 | 0.761 | 0.286 |
+| gpt-oss-20b_high | GSM8K | 17 | 0 | 0.701 | 0.686 |
+| gpt-oss-20b_low | MATH | 17 | 0 | 0.845 | 0.845 |
+| gpt-oss-20b_low | AMC | 12 | 0 | 0.810 | 0.793 |
+| gpt-oss-20b_low | AIME | 24 | 0 | 0.825 | 0.778 |
+| gpt-oss-20b_low | GSM8K | 17 | 0 | 0.790 | 0.761 |
+| gpt-oss-20b_medium | MATH | 15 | 0 | 0.840 | 0.850 |
+| gpt-oss-20b_medium | AMC | 13 | 1 | 0.784 | 0.735 |
+| gpt-oss-20b_medium | AIME | 19 | 2 | 0.778 | 0.568 |
+| gpt-oss-20b_medium | GSM8K | 16 | 1 | 0.921 | 0.629 |
+
+
+
+## Analysis of Probe Generalization Across Datasets
+
+| Model | Trained on | Eval: MATH | Eval: GSM8K | Eval: AIME | Avg ± SD |
+|---|---|---:|---:|---:|---:|
+| **Qwen2.5-1.5B-Instruct** | MATH | **0.844** | 0.727 | 0.931 | 0.834 ± 0.084 |
+|  | GSM8K | 0.796 | **0.762** | 1.000 | 0.853 ± 0.105 |
+|  | AIME | 0.783 | 0.709 | **0.931** | 0.808 ± 0.092 |
+| **Qwen2.5-Math-1.5B-Instruct** | MATH | **0.841** | 0.730 | 0.654 | **0.742 ± 0.077** |
+|  | GSM8K | 0.760 | **0.758** | 0.538 | 0.685 ± 0.104 |
+|  | AIME | 0.740 | 0.605 | **0.712** | 0.686 ± 0.058 |
+| **Qwen2.5-Math-7B-Instruct** | MATH | **0.846** | 0.720 | 0.901 | **0.822 ± 0.076** |
+|  | GSM8K | 0.794 | **0.767** | 0.877 | 0.813 ± 0.047 |
+|  | AIME | 0.745 | 0.640 | **0.679** | 0.688 ± 0.043 |
+| **DeepSeek-R1-Distill-Qwen-7B** | MATH | **0.739** | 0.515 | 0.643 | **0.632 ± 0.092** |
+|  | GSM8K | 0.589 | **0.640** | 0.502 | 0.577 ± 0.057 |
+|  | AIME | 0.634 | 0.511 | **0.701** | 0.615 ± 0.079 |
+| **gpt-oss-20b-low** | MATH | **0.845** | 0.710 | 0.611 | **0.722 ± 0.096** |
+|  | GSM8K | 0.662 | **0.761** | 0.361 | 0.595 ± 0.170 |
+|  | AIME | 0.650 | 0.614 | **0.778** | 0.681 ± 0.070 |
+| **gpt-oss-20b-medium** | MATH | **0.850** | 0.725 | 0.504 | **0.693 ± 0.143** |
+|  | GSM8K | 0.540 | **0.629** | 0.504 | 0.558 ± 0.053 |
+|  | AIME | 0.558 | 0.577 | **0.568** | 0.568 ± 0.008 |
+| **gpt-oss-20b-high** | MATH | **0.860** | 0.692 | 0.679 | **0.744 ± 0.082** |
+|  | GSM8K | 0.656 | **0.686** | 0.214 | 0.519 ± 0.216 |
+|  | AIME | 0.594 | 0.522 | **0.286** | 0.467 ± 0.132 |
+
+
+
