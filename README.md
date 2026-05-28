@@ -92,6 +92,33 @@ To understand how the probe performance changes across Base, Instruct, Math-Inst
 | Instruct | 0.8375 | 0.7284 | 0.7766 |
 | Reasoning (R1-Distill) | 0.7391 | 0.7014 | 0.6401 |
 
+## Analysis of the Routing Splits
+
+The table below shows the cost, accuracy, and the break down of how each router assigns questions to each model on the GSM8K, AIME, and Math datasets. In the GSM8K dataset the router uses the Math-7B model and GPT-OSS-low models to reduce the cost identifying that both are capable of answering the GSM8K questions. In AIME, a much harder dataset, our router divides the questions mostly between the Medium and High GPT-OSS models reflecting the need for extensive reasoning when answering these questions. 
+
+| Strategy | Cost ($) | GSM8K Accuracy | Math-7B | R1-Qwen-7B | gpt-oss-20b-low | gpt-oss-20b-medium | gpt-oss-20b-high |
+|---|---|---|---|---|---|---|---|
+| Oracle | $0.4223 | 97.8% | 6% | 1% | 92% | 1% | 0% |
+| Probe (λ=1.00) | $0.4318 | 94.1% | 39% | 0% | 60% | 1% | 0% |
+| Probe (λ=0.59) | $0.4588 | 94.4% | 47% | 0% | 51% | 2% | 0% |
+| Probe (λ=0.53) | $0.4713 | 94.5% | 47% | 0% | 49% | 3% | 0% |
+| Probe (λ=0.37) | $0.5170 | 94.5% | 49% | 0% | 43% | 8% | 0% |
+| Random | $0.9986 | 92.0% | 20% | 21% | 19% | 21% | 19% |
+| SC-Entropy | $5.2471 | 95.8% | 94% | 3% | 1% | 2% | 1% |
+| MIRT Router | $2.0130 | 94.1% | 14.4% | 1.5% | 0.3% | 6% | 77.8% |
+
+| Strategy | Cost ($) | AIME Accuracy | Math-7B | R1-Qwen-7B | gpt-oss-20b-low | gpt-oss-20b-medium | gpt-oss-20b-high |
+|---|---|---|---|---|---|---|---|
+| Oracle | $0.5490 | 93.3% | 17% | 17% | 30% | 27% | 10% |
+| Random | $0.5187 | 43.3% | 30% | 30% | 17% | 10% | 13% |
+| SC-Entropy (best) | $2.7740 | 93.3% | 0% | 30% | 3% | 33% | 33% |
+| Probe (λ=0.98) | $0.4216 | 66.7% | 3% | 10% | 30% | 57% | 0% |
+| Probe (λ=0.27) | $0.5401 | 83.3% | 0% | 13% | 3% | 77% | 7% |
+| Probe (λ=0.08) | $0.8607 | 86.7% | 0% | 7% | 0% | 57% | 37% |
+| Probe (λ=0.04) | $1.1288 | 93.3% | 0% | 3% | 0% | 43% | 53% |
+| MIRT Router | $0.9460 | 80.0% | 0% | 0% | 3% | 70% | 27% |
+
+
 ## Analysis of Routing Costs
 
 We provide updated results for our routing experiments factoring in the additional cost of evaluating the probe across all 
