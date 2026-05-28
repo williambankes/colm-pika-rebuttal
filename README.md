@@ -1,8 +1,15 @@
 # Colm-Pika-Rebuttal
 
-This anon repo provides plots and additional results for the reviewers interest. These will be added to the appendix of the updated manuscript.
+This anon repo provides plots and additional results for the reviewers interest and hopefully in an easy to read format. These will be added to the appendix of the updated manuscript.
 
 ## Analysis of Probe Performance Across Layers
+
+To better understand how the selected layer affects probe performance we trained a probe across every other layer i.e. {1,3,5,...27} of Qwen2.5-Math-1.5B-Instruct and Qwen/Qwen2.5-Math-7B-Instruct on the Math dataset - which has large validation and test sizes, 1.5k and 5k samples respectively. The results are shown in the table and figures below: 
+
+<p align="center">
+  <img src="https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/Qwen_Qwen2.5-Math-1.5B-Instruct__DigitalLearningGmbH_MATH-lighteval_layer_sweep.png?raw=true" width="49%" />
+  <img src="https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/Qwen_Qwen2.5-Math-7B-Instruct__DigitalLearningGmbH_MATH-lighteval_layer_sweep.png?raw=true" width="49%" />
+</p>
 
 | Layer | Qwen/Qwen2.5-Math-1.5B-Instruct | Qwen/Qwen2.5-Math-7B-Instruct |
 |---:|---:|---:|
@@ -20,6 +27,8 @@ This anon repo provides plots and additional results for the reviewers interest.
 | 23 | 0.8386 | 0.8453 |
 | 25 | 0.8368 | 0.8379 |
 | 27 | 0.8368 | 0.8436 |
+
+We further analyse the logs of our experiments in Table 2 and present their best layer and best position ids in the table below, here best_pos_idx is the position relative to the end of the prompt. We note that out of 28 layers Qwen 2.5 models consistently find the best representation in the later layers of the network (>20) with the exception of DeepSeek-R1-Distill-Qwen-7B on the AIME dataset at layer 13. In the GPT-OSS model the average best layer decreases as the reasoning level increases 17.50, 15.75, 14.50 for low, medium, and high respectively. We do not find a consistent pattern across datasets e.g. AIME best layers vary from 13 to 28.
 
 | model | dataset | best_layer_idx | best_pos_idx | best_val_score | test_score |
 |---|---|---|---|---|---|
@@ -43,9 +52,9 @@ This anon repo provides plots and additional results for the reviewers interest.
 | gpt-oss-20b_medium | AIME | 19 | 2 | 0.778 | 0.568 |
 | gpt-oss-20b_medium | GSM8K | 16 | 1 | 0.921 | 0.629 |
 
-
-
 ## Analysis of Probe Generalization Across Datasets
+
+Here we analyse how our success probes generalise when trained on one dataset and evaluated on another. We note that training on the Math dataset leads to the best average AUROC results for the majority of models. Whilst AIME appears to be the worst for generalization. In specific instances the Math trained probes achieve better performance on AIME than those trained on the dataset itself, see Qwen2.5-Math-7B-Instruct and gpt-oss-20b-high. Both GSM8K and AIME often fail to generalize to the MATH dataset. 
 
 | Model | Trained on | Eval: MATH | Eval: GSM8K | Eval: AIME | Avg ± SD |
 |---|---|---:|---:|---:|---:|
@@ -71,5 +80,22 @@ This anon repo provides plots and additional results for the reviewers interest.
 |  | GSM8K | 0.656 | **0.686** | 0.214 | 0.519 ± 0.216 |
 |  | AIME | 0.594 | 0.522 | **0.286** | 0.467 ± 0.132 |
 
+
+## Performance of Probe Across Base/Instruct/Math-Instruct/Reasoning Models
+
+To understand how the probe performance changes across Base, Instruct, Math-Instruct, and reasoning models we run probe training on variants of Qwen2.5-7B. The results are reported in the table below. The Base model probe achieves the lowest performance across the MATH and AIME datasets failing to answer any questions in AIME. The Math and Instruct models perform the best with the probe performance dropping again on the Reasoning R1-Distill model. 
+
+| Qwen 2.5-7B | MATH | AIME | GSM8K |
+|:---|:---:|:---:|:---:|
+| Base | 0.7694 | NaN | 0.6661 |
+| Math | 0.8463 | 0.6790 | 0.7665 |
+| Instruct | 0.8375 | 0.7284 | 0.7766 |
+| Reasoning (R1-Distill) | 0.7391 | 0.7014 | 0.6401 |
+
+## Analysis of Routing Costs
+
+We provide updated results for our routing experiments factoring in the additional cost of evaluating the probe across all 
+
+![routing_figure](https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/GSM8K_routing_with_costs.png?raw=true)
 
 
