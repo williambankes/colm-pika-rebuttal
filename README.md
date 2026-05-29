@@ -2,7 +2,7 @@
 
 This anon repo provides plots and additional results for the reviewers interest and hopefully in an easy to read format. These will be added to the appendix of the updated manuscript.
 
-## Dataset Statistics
+## 1. Dataset Statistics
 
 Train, validation, and test split sizes for each dataset are shown below:
 
@@ -27,7 +27,7 @@ The maj@5 performance spread across the 7 models used in the routing experiments
 
 
 
-## Analysis of Probe Performance Across Layers
+## 2. Analysis of Probe Performance Across Layers
 
 To better understand how the selected layer affects probe performance we trained a probe across every other layer i.e. {1,3,5,...27} of Qwen2.5-Math-1.5B-Instruct and Qwen/Qwen2.5-Math-7B-Instruct on the Math dataset - which has large validation and test sizes, 1.5k and 5k samples respectively. The results are shown in the table and figures below: 
 
@@ -77,7 +77,7 @@ We further analyse the logs of our experiments in Table 2 and present their best
 | gpt-oss-20b_medium | AIME | 19 | 2 | 0.778 | 0.568 |
 | gpt-oss-20b_medium | GSM8K | 16 | 1 | 0.921 | 0.629 |
 
-## Analysis of Probe Generalization Across Datasets
+## 3. Analysis of Probe Generalization Across Datasets
 
 Here we analyse how our success probes generalise when trained on one dataset and evaluated on another. We note that training on the Math dataset leads to the best average AUROC results for the majority of models. Whilst AIME appears to be the worst for generalization. In specific instances the Math trained probes achieve better performance on AIME than those trained on the dataset itself, see Qwen2.5-Math-7B-Instruct and gpt-oss-20b-high. Both GSM8K and AIME often fail to generalize to the MATH dataset. 
 
@@ -106,7 +106,7 @@ Here we analyse how our success probes generalise when trained on one dataset an
 |  | AIME | 0.594 | 0.522 | **0.286** | 0.467 ± 0.132 |
 
 
-## Performance of Probe Across Base/Instruct/Math-Instruct/Reasoning Models
+## 4. Performance of Probe Across Base/Instruct/Math-Instruct/Reasoning Models
 
 To understand how the probe performance changes across Base, Instruct, Math-Instruct, and reasoning models we run probe training on variants of Qwen2.5-7B. The results are reported in the table below. The Base model probe achieves the lowest performance across the MATH and AIME datasets failing to answer any questions in AIME. The Math and Instruct models perform the best with the probe performance dropping again on the Reasoning R1-Distill model. 
 
@@ -117,7 +117,7 @@ To understand how the probe performance changes across Base, Instruct, Math-Inst
 | Instruct | 0.8375 | 0.7284 | 0.7766 |
 | Reasoning (R1-Distill) | 0.7391 | 0.7014 | 0.6401 |
 
-## Analysis of the Routing Splits
+## 5. Analysis of the Routing Splits
 
 The table below shows the cost, accuracy, and the break down of how each router assigns questions to each model on the GSM8K, AIME, and Math datasets. In the GSM8K dataset the router uses the Math-7B model and GPT-OSS-low models to reduce the cost identifying that both are capable of answering the GSM8K questions. In AIME, a much harder dataset, our router divides the questions mostly between the Medium and High GPT-OSS models reflecting the need for extensive reasoning when answering these questions. 
 
@@ -159,7 +159,7 @@ The table below shows the cost, accuracy, and the break down of how each router 
 | MIRT Router | $38.5990 | 92.0% | 2% | 4% | 0% | 0% | 94% |
 
 
-## Analysis of Routing Costs
+## 6. Analysis of Routing Costs
 
 We provide updated results for our routing experiments factoring in the additional cost of evaluating the probe across all 
 
