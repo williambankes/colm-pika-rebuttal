@@ -15,7 +15,7 @@ Train, validation, and test split sizes for each dataset are shown below:
 | GSM8K | 4,784 | 1,195 | 1,319 |
 | LiveCodeBench | 458 | 114 | 341 |
 
-The maj@k performance spread across the 7 models used in the routing experiments is shown below:
+The maj@5 performance spread across the 7 models used in the routing experiments is shown below:
 
 | Dataset | Train | Val | Test |
 |:---|:---:|:---:|:---:|
