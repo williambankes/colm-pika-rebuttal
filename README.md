@@ -2,6 +2,31 @@
 
 This anon repo provides plots and additional results for the reviewers interest and hopefully in an easy to read format. These will be added to the appendix of the updated manuscript.
 
+## Dataset Statistics
+
+Train, validation, and test split sizes for each dataset are shown below:
+
+| Dataset | Train | Val | Test |
+|:---|---:|---:|---:|
+| MATH | 6,000 | 1,500 | 5,000 |
+| E2H-AMC | 640 | 160 | 2,975 |
+| AIME-1983-2024 | 598 | 149 | 30 |
+| AIME-2025 | — | — | 30 |
+| GSM8K | 4,784 | 1,195 | 1,319 |
+| LiveCodeBench | 458 | 114 | 341 |
+
+The maj@k performance spread across the 7 models used in the routing experiments is shown below:
+
+| Dataset | Train | Val | Test |
+|:---|:---:|:---:|:---:|
+| MATH | 0.836 ± 0.093 | 0.832 ± 0.097 | 0.825 ± 0.112 |
+| E2H-AMC | 0.532 ± 0.224 | 0.534 ± 0.214 | 0.537 ± 0.224 |
+| AIME-1983-2024 | 0.564 ± 0.309 | 0.577 ± 0.303 | 0.429 ± 0.336 |
+| AIME-2025 | — | — | 0.410 ± 0.332 |
+| GSM8K | 0.919 ± 0.027 | 0.918 ± 0.032 | 0.889 ± 0.062 |
+
+
+
 ## Analysis of Probe Performance Across Layers
 
 To better understand how the selected layer affects probe performance we trained a probe across every other layer i.e. {1,3,5,...27} of Qwen2.5-Math-1.5B-Instruct and Qwen/Qwen2.5-Math-7B-Instruct on the Math dataset - which has large validation and test sizes, 1.5k and 5k samples respectively. The results are shown in the table and figures below: 
@@ -96,6 +121,7 @@ To understand how the probe performance changes across Base, Instruct, Math-Inst
 
 The table below shows the cost, accuracy, and the break down of how each router assigns questions to each model on the GSM8K, AIME, and Math datasets. In the GSM8K dataset the router uses the Math-7B model and GPT-OSS-low models to reduce the cost identifying that both are capable of answering the GSM8K questions. In AIME, a much harder dataset, our router divides the questions mostly between the Medium and High GPT-OSS models reflecting the need for extensive reasoning when answering these questions. 
 
+### GSM8K routing splits
 | Strategy | Cost ($) | GSM8K Accuracy | Math-7B | R1-Qwen-7B | gpt-oss-20b-low | gpt-oss-20b-medium | gpt-oss-20b-high |
 |---|---|---|---|---|---|---|---|
 | Oracle | $0.4223 | 97.8% | 6% | 1% | 92% | 1% | 0% |
@@ -107,6 +133,7 @@ The table below shows the cost, accuracy, and the break down of how each router 
 | SC-Entropy | $5.2471 | 95.8% | 94% | 3% | 1% | 2% | 1% |
 | MIRT Router | $2.0130 | 94.1% | 14.4% | 1.5% | 0.3% | 6% | 77.8% |
 
+### AIME routing splits
 | Strategy | Cost ($) | AIME Accuracy | Math-7B | R1-Qwen-7B | gpt-oss-20b-low | gpt-oss-20b-medium | gpt-oss-20b-high |
 |---|---|---|---|---|---|---|---|
 | Oracle | $0.5490 | 93.3% | 17% | 17% | 30% | 27% | 10% |
@@ -118,11 +145,28 @@ The table below shows the cost, accuracy, and the break down of how each router 
 | Probe (λ=0.04) | $1.1288 | 93.3% | 0% | 3% | 0% | 43% | 53% |
 | MIRT Router | $0.9460 | 80.0% | 0% | 0% | 3% | 70% | 27% |
 
+### MATH Routing Splits 
+
+| Strategy | Cost ($) | Accuracy | Math-7B | R1-Qwen-7B | gpt-oss-20b-low | gpt-oss-20b-medium | gpt-oss-20b-high |
+|---|---|---|---|---|---|---|---|
+| Oracle | $6.4429 | 95.7% | 87% | 1% | 9% | 3% | 0% |
+| Random | $15.7569 | 88.7% | 20% | 20% | 20% | 21% | 20% |
+| SC-Entropy (best) | $77.8804 | 92.4% | 74% | 20% | 2% | 2% | 2% |
+| Probe (λ=1.00) | $5.5612 | 89.2% | 61% | 1% | 35% | 3% | 0% |
+| Probe (λ=0.10) | $12.5633 | 92.1% | 40% | 16% | 23% | 21% | 1% |
+| Probe (λ=0.02) | $20.4636 | 92.8% | 28% | 25% | 12% | 27% | 9% |
+| Probe (λ=0.00) | $26.1820 | 93.1% | 19% | 26% | 5% | 16% | 33% |
+| MIRT Router | $38.5990 | 92.0% | 2% | 4% | 0% | 0% | 94% |
+
 
 ## Analysis of Routing Costs
 
 We provide updated results for our routing experiments factoring in the additional cost of evaluating the probe across all 
 
 ![routing_figure](https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/GSM8K_routing_with_costs.png?raw=true)
+
+![routing_figure](https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/AIME_routing_with_costs.png?raw=true)
+
+![routing_figure](https://github.com/williambankes/colm-pika-rebuttal/blob/main/figures/MATH_routing_with_costs.png?raw=true)
 
 
